@@ -6,3 +6,9 @@ machine problems.
 
 After cloning this repository, you should replace the contents of this README
 file with, at minimum, your name, email address, and student ID.
+
+
+
+Raman Walwyn-Venugopal
+rwalwynv@hawk.iit.edu
+A20296946
