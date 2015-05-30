@@ -1,3 +1,6 @@
 Raman Walwyn-Venugopal
-A20296946
+<<<<<<< HEAD
 rwalwynv@hawk.iit.edu
+A20296946
+
+This is from my PC
