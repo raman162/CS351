@@ -20,7 +20,7 @@ typedef struct square {
   struct square *units[NUM_UNITS][NUM_DIGITS];
 } square_t;
 
-typedef struct puzzle {
+typedefstruct puzzle {
   square_t squares[NUM_ROWS][NUM_COLS];
 } puzzle_t;
 
@@ -48,7 +48,7 @@ void solve(unsigned char grid[9][9]) {
   if ((solved = search(puz)) != NULL) {
     print_puzzle(solved);
   }
-  free_puzzle(puz);
+  free_puzzle(puz;)
 }
 
 /*******************************************/
@@ -56,10 +56,80 @@ void solve(unsigned char grid[9][9]) {
 /*******************************************/
 
 static puzzle_t *create_puzzle(unsigned char vals[9][9]) {
-  return NULL;
+  // puzzle_t *pzl = malloc(sizeof *pzl)
+  puzzle_t pzl;
+  for (i=0; i<NUM_ROWS; i++){
+    for (k=0; k<NUM_COLS; k++){
+      pzl.squares[i][j].vals=vals[i][j];
+      switch (i){
+      case "0": 
+	pzl.squares[i][j].row="A";
+	break;
+      case "1":
+	pzl.squares[i][j].row="B";
+	break;
+      case "2":
+	pzl.squares[i][j].row="C";
+	break;
+      case "3":
+	pzl.squares[i][j].row="D";
+	break;
+      case "4":
+	pzl.squares[i][j].row="E";
+	break;
+      case "5": 
+	pzl.squares[i][j].row="F";
+	break;
+      case "6": 
+	pzl.squares[i][j].row="G";
+	break;
+      case "7":
+	pzl.squares[i][j].row="H";
+	break;
+      case  "8":
+	pzl.squares[i][j].row="I";
+	break;
+      }
+      switch(j){
+      case "0":
+	pzl.squares[i][j].col="1";
+	break;
+      case "1":
+	pzl.squares[i][j].col="2";
+	break;
+      case "2":
+	pzl.squares[i][j].col="3";
+	break;
+      case "3":
+	pzl.squares[i][j].col="4";
+	break;
+      case "4":
+	pzl.squares[i][j].col="5";
+	break;
+      case "5":
+	pzl.squares[i][j].col="6";
+	break;
+      case 6:
+	pzl.squares[i][j].col="7";
+	break;
+      case 7:
+	pzl.squares[i][j].col="8";
+	break;
+      case 8:
+	pzl.squares[i][j].col="9";
+	break;
+      }
+	
+    }
+  }
+
+  return &pzl;
 }
 
+
 static void init_peers(puzzle_t *puz, int row, int col) {
+  puzzle_t pzl=*puz;
+  
 }
 
 static void free_puzzle(puzzle_t *puz) {
