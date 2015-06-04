@@ -14,8 +14,8 @@
 
 typedef struct square {
   char vals[NUM_DIGITS+1]; // string of possible values
-  unsigned char row;
-  unsigned char col;
+  int row;
+  int col;
   struct square *peers[NUM_PEERS];
   struct square *units[NUM_UNITS][NUM_DIGITS];
 } square_t;
@@ -49,7 +49,7 @@ void solve(unsigned char grid[9][9]) {
     print_puzzle(solved);
   }
   free_puzzle(puz;)
-}
+    }
 
 /*******************************************/
 /* Puzzle data structure related functions */
@@ -57,79 +57,79 @@ void solve(unsigned char grid[9][9]) {
 
 static puzzle_t *create_puzzle(unsigned char vals[9][9]) {
   // puzzle_t *pzl = malloc(sizeof *pzl)
-  puzzle_t pzl;
+  puzzle_t *pzl_ptr=malloc (sizeof(puzzle_t));
+  square_t *sq;
+  int i, k;
   for (i=0; i<NUM_ROWS; i++){
     for (k=0; k<NUM_COLS; k++){
-      pzl.squares[i][j].vals=vals[i][j];
-      switch (i){
-      case "0": 
-	pzl.squares[i][j].row="A";
-	break;
-      case "1":
-	pzl.squares[i][j].row="B";
-	break;
-      case "2":
-	pzl.squares[i][j].row="C";
-	break;
-      case "3":
-	pzl.squares[i][j].row="D";
-	break;
-      case "4":
-	pzl.squares[i][j].row="E";
-	break;
-      case "5": 
-	pzl.squares[i][j].row="F";
-	break;
-      case "6": 
-	pzl.squares[i][j].row="G";
-	break;
-      case "7":
-	pzl.squares[i][j].row="H";
-	break;
-      case  "8":
-	pzl.squares[i][j].row="I";
-	break;
-      }
-      switch(j){
-      case "0":
-	pzl.squares[i][j].col="1";
-	break;
-      case "1":
-	pzl.squares[i][j].col="2";
-	break;
-      case "2":
-	pzl.squares[i][j].col="3";
-	break;
-      case "3":
-	pzl.squares[i][j].col="4";
-	break;
-      case "4":
-	pzl.squares[i][j].col="5";
-	break;
-      case "5":
-	pzl.squares[i][j].col="6";
-	break;
-      case 6:
-	pzl.squares[i][j].col="7";
-	break;
-      case 7:
-	pzl.squares[i][j].col="8";
-	break;
-      case 8:
-	pzl.squares[i][j].col="9";
-	break;
-      }
-	
+      sq=&(*pzl_ptr.squares[i][j]);
+      strcpy(*sq.vals, DIGITS);
+      *pzl_ptr.squares[i][j].row = i;
+      *pzl_ptr.squares[i][j].col = j;
     }
   }
+  
+  for (i=0; i<NUM_ROWS; i++){
+    for (k=0; k<NUM_COLS; k++){
+      init_peers(pzl_ptr i j);
+    }
+  }
+  
 
-  return &pzl;
+  
+  
+
+ 
+  
+  return pzl_ptr;
 }
 
-
+//intiates peers and units
 static void init_peers(puzzle_t *puz, int row, int col) {
-  puzzle_t pzl=*puz;
+  int i, k, peer_ctr, row_ctr, col_ctr, mod_row, mod_col;
+  peer_ctr=0;
+  for (col_ctr=0; col_ctr<NUM_COLS; col_ctr++){
+    if(i==(*pzl_ptr.squares[i][j].row) && k!=col_ctr){
+      *pzl_ptr.squares[i][j].peers[peer_ctr] = &(*pzl_ptr.squares[i][col_ctr]);
+      peer_ctr++;
+    }
+    *pzl_ptr.squares[i][j].units[0][col_ctr] = &(*pzl_ptr.squares[i][col_ctr]);
+  }
+  for (row_ctr=0; row_ctr<NUM_ROWS; row_ctr++){
+    if (k==(*pzl_ptr.squares[i][j].col) && i!= row_ctr){
+      *pzl_ptr.squares[i][j].peers[peer_ctr] = &(*pzl_ptr.squares[row_ctr][k]);
+      peer_ctr++;
+    }
+    *pzl_ptr.squares[i][j].units[1][row_ctr] = &(*pzl_ptr.squares[row_ctr][k]);
+  }
+  mod_row=row%3;
+  mod_col=col%3;
+  k=0;
+  for (row_ctr=row-mod_row;row_ctr<(row-mod_row+3); row_ctr++){
+    for (col_ctr=col-mod_col; col_ctr<(row-mod_col+3); col_ctr++){
+      if (ExistInArr(&(*pzl_ptr.squares[i][j])  ), (&(*pzl_ptr.squares[row_ctr][col_ctr]))== false){
+        *pzl_ptr.squares[i][j].peers[peer_ctr]=&(*pzl_ptr.squares[row_ctr][col_ctr]);
+        peer_ctr++;
+      }
+      *pzl_ptr.squares[i][j].units[2][k] = &(*pzl_ptr.squares[row_ctr][col_ctr]);
+      k++;
+        )
+      }
+    }
+  }
   
+}
+
+static bool ExistInArr(square_t *sq_or, square_t *sq_add){
+  int i;
+  for (int i=0; i<20, i++){
+    if (*sq_or.peers[i] == sq_add){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 }
 
 static void free_puzzle(puzzle_t *puz) {
