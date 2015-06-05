@@ -69,12 +69,13 @@ static puzzle_t *create_puzzle(unsigned char vals[9][9]) {
       (*sq).col = j;
     }
   }
-  
+  printf("just assigned all the squares 9 possible digits\n");
   for (i=0; i<NUM_ROWS; i++){
     for (j=0; j<NUM_COLS; j++){
       init_peers(pzl_ptr, i, j);
     }
   }
+  printf("initiated the peers\n");
   
   for (i=0; i<NUM_ROWS; i++){
     for (j=0; j<NUM_COLS; j++){
@@ -82,46 +83,55 @@ static puzzle_t *create_puzzle(unsigned char vals[9][9]) {
         assign(pzl_ptr,i,j, vals[i][j]);//assigning of the values that were given
       }
     }
- 
-
-  
-  
-
- 
-  
-   
   }
+  printf("assigning given values\n");
  return pzl_ptr;
 }
 
 //intiates peers and units
 static void init_peers(puzzle_t *puz, int row, int col) {
   int i, j, peer_ctr, row_ctr, col_ctr, mod_row, mod_col;
+  square_t *sq;
   peer_ctr=0;
-  for (col_ctr=0; col_ctr<NUM_COLS; col_ctr++){
-    if(i==(((*puz).squares[i][j]).row) && j!=col_ctr){
-      ((*puz).squares[i][j]).peers[peer_ctr] = &((*puz).squares[i][col_ctr]);
-      peer_ctr++;
-    }
-    ((*puz).squares[i][j]).units[0][col_ctr] = &((*puz).squares[i][col_ctr]);
+  if (puz==NULL){
+    // printf("Error with pointer, it is null\n");
   }
-  for (row_ctr=0; row_ctr<NUM_ROWS; row_ctr++){
-    if (j==(((*puz).squares[i][j]).col) && i!= row_ctr){
-      ((*puz).squares[i][j]).peers[peer_ctr] = &((*puz).squares[row_ctr][j]);
-      peer_ctr++;
+  //  printf("started the init_peers and units function\n");
+  printf("working on square :%d, %d\n", row , col );
+  for (col_ctr=0; col_ctr<NUM_COLS; col_ctr++){
+    // printf("working on column: %d\n", col_ctr);
+    if(row==(*puz).squares[row][col].row && col!=col_ctr){//where the segmentation fault is occurring
+  
+      ((*puz).squares[row][col]).peers[peer_ctr] = &((*puz).squares[row][col_ctr]);
+      printf("assigned peer from the row%d: %d\n",row, peer_ctr);
+      peer_ctr++; 
     }
-    ((*puz).squares[i][j]).units[1][row_ctr] = &((*puz).squares[row_ctr][j]);
+    
+    ((*puz).squares[row][col]).units[0][col_ctr] = &((*puz).squares[row][col_ctr]);
+  }
+  //  printf("assigned the peers of unit 1\n");
+  for (row_ctr=0; row_ctr<NUM_ROWS; row_ctr++){
+    if (col==(((*puz).squares[row][col]).col) && row!= row_ctr){
+      ((*puz).squares[row][col]).peers[peer_ctr] = &((*puz).squares[row_ctr][col]);
+      printf("assigned peer from col%d: %d\n",col, peer_ctr); 
+      peer_ctr++;
+      
+    }
+    ((*puz).squares[row][col]).units[1][row_ctr] = &((*puz).squares[row_ctr][col]);
   }
   mod_row=row%3;
   mod_col=col%3;
   j=0;
-  for (row_ctr=row-mod_row;row_ctr<(row-mod_row+3); row_ctr++){
-    for (col_ctr=col-mod_col; col_ctr<(row-mod_col+3); col_ctr++){
-      if (existInArr(&((*puz).squares[i][j]), &((*puz).squares[row_ctr][col_ctr])) == 0){
-        ((*puz).squares[i][j]).peers[peer_ctr]=&((*puz).squares[row_ctr][col_ctr]);
+  for (row_ctr=(row-mod_row);row_ctr<(row-mod_row+3); row_ctr++){
+    for (col_ctr=(col-mod_col); col_ctr<(row-mod_col+3); col_ctr++){
+      printf("Whether the peer already exists: %d\n", (existInArr(&((*puz).squares[row][col]), &((*puz).squares[row_ctr][col_ctr]))));
+      if (existInArr(&((*puz).squares[row][col]), &((*puz).squares[row_ctr][col_ctr])) == 0){
+        ((*puz).squares[row][col]).peers[peer_ctr]=&((*puz).squares[row_ctr][col_ctr]);
+        printf("assigned peer from respective box: %d\n", peer_ctr);
         peer_ctr++;
+        
       }
-      ((*puz).squares[i][j]).units[2][j] = &((*puz).squares[row_ctr][col_ctr]);
+      ((*puz).squares[row][col]).units[2][j] = &((*puz).squares[row_ctr][col_ctr]);
       j++;
     }
   }
