@@ -20,7 +20,7 @@ typedef struct square {
   struct square *units[NUM_UNITS][NUM_DIGITS];
 } square_t;
 
-typedefstruct puzzle {
+typedef struct puzzle {
   square_t squares[NUM_ROWS][NUM_COLS];
 } puzzle_t;
 
@@ -33,11 +33,11 @@ static void init_peers(puzzle_t *puz, int row, int col);
 static puzzle_t *copy_puzzle(puzzle_t *puz);
 static void free_puzzle(puzzle_t *puz);
 static void print_puzzle(puzzle_t *);
-
+static int existInArr(square_t *sq_or, square_t *sq_add);
 static puzzle_t *search(puzzle_t *puz);
 static puzzle_t *assign(puzzle_t *puz, int row, int col, char val);
 static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val);
-
+static int MaxLenInPuz(puzzle_t *puz);
 /*************************/
 /* Public solve function */
 /*************************/
@@ -48,7 +48,7 @@ void solve(unsigned char grid[9][9]) {
   if ((solved = search(puz)) != NULL) {
     print_puzzle(solved);
   }
-  free_puzzle(puz;)
+  free_puzzle(puz);
     }
 
 
@@ -64,7 +64,7 @@ static puzzle_t *create_puzzle(unsigned char vals[9][9]) {
   for (i=0; i<NUM_ROWS; i++){
     for (j=0; j<NUM_COLS; j++){
       sq=&(*pzl_ptr).squares[i][j];
-      strcpy((*sq.)vals, DIGITS);
+      strcpy((*sq).vals, DIGITS);
       (*sq).row = i;
       (*sq).col = j;
     }
@@ -80,16 +80,18 @@ static puzzle_t *create_puzzle(unsigned char vals[9][9]) {
     for (j=0; j<NUM_COLS; j++){
       if(vals[i][j]!='0' || vals[i][j] !='.'){
         assign(pzl_ptr,i,j, vals[i][j]);//assigning of the values that were given
+      }
     }
+ 
+
+  
+  
+
+ 
+  
+   
   }
- 
-
-  
-  
-
- 
-  
-  return pzl_ptr;
+ return pzl_ptr;
 }
 
 //intiates peers and units
@@ -97,7 +99,7 @@ static void init_peers(puzzle_t *puz, int row, int col) {
   int i, j, peer_ctr, row_ctr, col_ctr, mod_row, mod_col;
   peer_ctr=0;
   for (col_ctr=0; col_ctr<NUM_COLS; col_ctr++){
-    if(i==(((*pzl_ptr).squares[i][j]).row) && j!=col_ctr){
+    if(i==(((*puz).squares[i][j]).row) && j!=col_ctr){
       ((*puz).squares[i][j]).peers[peer_ctr] = &((*puz).squares[i][col_ctr]);
       peer_ctr++;
     }
@@ -115,27 +117,25 @@ static void init_peers(puzzle_t *puz, int row, int col) {
   j=0;
   for (row_ctr=row-mod_row;row_ctr<(row-mod_row+3); row_ctr++){
     for (col_ctr=col-mod_col; col_ctr<(row-mod_col+3); col_ctr++){
-      if (ExistInArr((&((*puz).squares[i][j])  ), (&((*puz).squares[row_ctr][col_ctr]))) == false){
+      if (existInArr(&((*puz).squares[i][j]), &((*puz).squares[row_ctr][col_ctr])) == 0){
         ((*puz).squares[i][j]).peers[peer_ctr]=&((*puz).squares[row_ctr][col_ctr]);
         peer_ctr++;
       }
       ((*puz).squares[i][j]).units[2][j] = &((*puz).squares[row_ctr][col_ctr]);
       j++;
-        )
-      }
     }
   }
-  
 }
+  
 
-static bool ExistInArr(square_t *sq_or, square_t *sq_add){
+static int existInArr(square_t *sq_or, square_t *sq_add){
   int i;
-  for (int i=0; i<20, i++){
+  for (i=0; i<20; i++){
     if ((*sq_or).peers[i] == sq_add){
-      return true;
+      return 1;
     }
     else{
-      return false;
+      return 0;
     }
   }
 }
@@ -167,9 +167,8 @@ void print_puzzle(puzzle_t *p) {
 /**********/
 
 static puzzle_t *search(puzzle_t *puz) {
-  int j, k, sq_len, i, minlen;
+  int j, k, sq_len, i, minlen, maxlen;
   puzzle_t *copy_puz, *check;
-  char val;
   square_t *sq;
   if (puz==NULL){
     return NULL;//Failed Earlier
@@ -219,7 +218,7 @@ static puzzle_t *assign(puzzle_t *puz, int row, int col, char val) {
 }
 
 static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
-  int i, k, len, newlen;
+  int i, len, newlen;
   square_t *peer;
   char *target;
  for (i=0;i<20;i++){
@@ -251,7 +250,7 @@ static int MaxLenInPuz(puzzle_t *puz){
     for (j=0;j<NUM_COLS;j++){
       sq=&(*puz).squares[i][j];
       sqlen=strlen((*sq).vals);
-      (if sqlen>maxlen){
+      if (sqlen>maxlen){
         maxlen=sqlen;
       }
     }
@@ -260,10 +259,4 @@ static int MaxLenInPuz(puzzle_t *puz){
 }
 
 
-//returns the length of vals string in square
-static int SqLen(square_t *sq){
-  int len;
-  len = strlen((*sq).vals);
-  return len;
-  
-}
+
