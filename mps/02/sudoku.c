@@ -51,6 +51,7 @@ void solve(unsigned char grid[9][9]) {
   free_puzzle(puz;)
     }
 
+
 /*******************************************/
 /* Puzzle data structure related functions */
 /*******************************************/
@@ -59,22 +60,30 @@ static puzzle_t *create_puzzle(unsigned char vals[9][9]) {
   // puzzle_t *pzl = malloc(sizeof *pzl)
   puzzle_t *pzl_ptr=malloc (sizeof(puzzle_t));
   square_t *sq;
-  int i, k;
+  int i, j;
   for (i=0; i<NUM_ROWS; i++){
-    for (k=0; k<NUM_COLS; k++){
-      sq=&(*pzl_ptr.squares[i][j]);
-      strcpy(*sq.vals, DIGITS);
-      *pzl_ptr.squares[i][j].row = i;
-      *pzl_ptr.squares[i][j].col = j;
+    for (j=0; j<NUM_COLS; j++){
+      sq=&(*pzl_ptr).squares[i][j];
+      strcpy((*sq.)vals, DIGITS);
+      (*pzl_pt)r.squares[i][j].row = i;
+      (*pzl_ptr).squares[i][j].col = j;
     }
   }
   
   for (i=0; i<NUM_ROWS; i++){
-    for (k=0; k<NUM_COLS; k++){
-      init_peers(pzl_ptr i j);
+    for (j=0; j<NUM_COLS; j++){
+      init_peers(pzl_ptr, i, j);
     }
   }
   
+  for (i=0; i<NUM_ROWS; i++){
+    for (j=0; j<NUM_COLS; j++){
+      if(vals[i][j]!='0' || vals[i][j] !='.'){
+        (*pzl_ptr).squares[i][j].vals=vals[i][j];//assigning of the values that were given 
+        
+    }
+  }
+ 
 
   
   
@@ -163,11 +172,47 @@ static puzzle_t *search(puzzle_t *puz) {
 /**************************/
 
 static puzzle_t *assign(puzzle_t *puz, int row, int col, char val) {
-  return NULL;
+  square_t *sq = &((*puz).squares[row][col]);
+  int i;
+  strcpy((*sq).vals,"");
+  (*sq).vals[0]=val;
+  (*sq).vals[1]='\0';
+  for (i=0;i<20;i++){
+    eliminate(puz, row, col, val);
+  }
+
+
+  return puz;
 }
 
 static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
-  return NULL;
+  int i, k, len, newlen;
+  square_t *peer;
+  char *target;
+ for (i=0;i<20;i++){
+   peer = ((*puz).squares[row][col]).peers[i];
+   len=strlen((*peer).vals);
+   if(len>1){
+     target=strchr((*peer).vals, val);
+     if (target!=NULL){
+       memmove(target++,target,len);
+       newlen = (len-1);
+       if (newlen==1){
+         assign(puz,row,col,(*peer).vals[0]);
+       }
+
+     }
+   
+   }
+   else{
+     assign(puz,row,col,(*peer).vals[0]);
+   }
+  }
+ return puz;
+
+
+
+  
 }
 
 /*****************************************/
