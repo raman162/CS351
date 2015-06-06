@@ -99,6 +99,8 @@ static puzzle_t *create_puzzle(unsigned char vals[9][9]) {
   return pzl_ptr;
 }
 
+
+
 //intiates peers and units
 static void init_peers(puzzle_t *puz, int row, int col) {
   int   j, peer_ctr, row_ctr, col_ctr, mod_row, mod_col;
@@ -142,10 +144,10 @@ static void init_peers(puzzle_t *puz, int row, int col) {
           ((*puz).squares[row][col]).peers[peer_ctr]=&((*puz).squares[row_ctr][col_ctr]);
           // printf("assigned peer from respective box: %d\n", peer_ctr);
           peer_ctr++;
-        }
-        ((*puz).squares[row][col]).units[2][j] = &((*puz).squares[row_ctr][col_ctr]);
-        j++;
+        } 
       }
+      ((*puz).squares[row][col]).units[2][j] = &((*puz).squares[row_ctr][col_ctr]);
+      j++;
     }
   }
 }
@@ -325,23 +327,24 @@ static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
         }
         else if (newlen==1){
           assign(puz,row,col,(*peer).vals[0]);
-          printf("assigning value %c\n", (*peer).vals[0]);
+          printf("\nLen1assigning value %c to square %d %d\n", (*peer).vals[0], row, col);
         }
         memmove(target++,target,len);
       }
   }
-  printf("\n\nDoes here even get passed?\n");
+  //printf("\n\nDoes here even get passed?\n");
   sq=&(*puz).squares[row][col];
   for (i=0; i<3;i++){
     printf("The unit is :%d\n", i);
     for (j=0; j<9;j++){
       unique_sq=Unique(sq,unittester[j],i);
-      printf("The value we are testing for %c\n", unittester[j]);
-      printf("The Unique value is: %p\n", unique_sq);
+      // printf("The value we are testing for %c\n", unittester[j]);
+      //printf("The Unique value is: %p\n", unique_sq);
         if (unique_sq != NULL){
           uni_row=(*unique_sq).row;
           uni_col=(*unique_sq).col;
           assign(puz, uni_row, uni_col, unittester[j]);
+          printf("\nUniqueUnit assigning value %c to square %d %d\n", unittester[j]  , uni_row, uni_col);
       }
     }
   }
@@ -356,14 +359,16 @@ static square_t* Unique(square_t *sq, char val, int unit){
   int i,j, count, len;
   count=0;
   for (i=0;i<9;i++){
+    //printf("Is the fault right here?\n");
     sq_u=(*sq).units[unit][i];
     len=strlen((*sq_u).vals);
-    printf("Location of where in unit is %d %d. The vals are %s and the length is %d\n",unit, i, (*sq_u).vals, len);
+    //    printf("Location of where in unit is %d %d. The vals are %s and the length is %d\n",unit, i, (*sq_u).vals, len);
     if (len>1){
       for (j=0;j<len;j++){
         if ((*sq_u).vals[j]==val){
           count++;
           if (count == 1){
+            //printf("Do we ever get here?\n");
             sq_tar=sq_u;
           }
         }
