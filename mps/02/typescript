@@ -1,0 +1,814 @@
+Script started on Sat 06 Jun 2015 05:39:53 PM CDT
+0m23m24mJmps/02100m37m[students/rwalwynv31m●00m]00m »0m K?1hmake clean ; make?1l
+makerm -f sudoku.o main.o  sudoku
+gcc -g -Wall   -c -o sudoku.o sudoku.c
+sudoku.c: In function ‘create_puzzle’:
+sudoku.c:84: warning: format ‘%s’ expects type ‘char *’, but argument 2 has type ‘unsigned char (*)[9]’
+sudoku.c: In function ‘eliminate_search’:
+sudoku.c:286: warning: operation on ‘target’ may be undefined
+sudoku.c: In function ‘eliminate’:
+sudoku.c:332: warning: operation on ‘target’ may be undefined
+sudoku.c: In function ‘search’:
+sudoku.c:235: warning: control reaches end of non-void function
+sudoku.c: In function ‘existInArr’:
+sudoku.c:167: warning: control reaches end of non-void function
+sudoku.c: At top level:
+sudoku.c:269: warning: ‘eliminate_search’ defined but not used
+gcc -g -Wall   -c -o main.o main.c
+gcc -g -Wall -o sudoku sudoku.o main.o
+0m23m24mJmps/02100m37m[students/rwalwynv31m●00m]00m »0m K?1hgdb ./sudoku?1l
+gdbGNU gdb (GDB) Red Hat Enterprise Linux (7.2-60.el6_4.1)
+Copyright (C) 2010 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+Reading symbols from /home/lee/classes/cs351/repos/mps/02/sudoku...done.
+(gdb) run < p096_sudoku.txt
+Starting program: /home/lee/classes/cs351/repos/mps/02/sudoku < p096_sudoku.txt
+warning: the debug information found in "/usr/lib/debug//lib64/ld-2.12.so.debug" does not match "/lib64/ld-linux-x86-64.so.2" (CRC mismatch).
+
+warning: the debug information found in "/usr/lib/debug/lib64/ld-2.12.so.debug" does not match "/lib64/ld-linux-x86-64.so.2" (CRC mismatch).
+
+warning: the debug information found in "/usr/lib/debug//lib64/libc-2.12.so.debug" does not match "/lib64/libc.so.6" (CRC mismatch).
+
+warning: the debug information found in "/usr/lib/debug/lib64/libc-2.12.so.debug" does not match "/lib64/libc.so.6" (CRC mismatch).
+
+Solving puzzle 1
+just assigned all the squares 9 possible digits
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+initiated the peers
+003020600900305001001806400008102900700000008006708200002609500800203009005010300
+326935The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+1The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+1The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 9 to square 2 1
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+8The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 2 to square 0 5
+
+UniqueUnit assigning value 5 to square 0 4
+
+UniqueUnit assigning value 8 to square 0 4
+
+UniqueUnit assigning value 9 to square 0 3
+6The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 4
+
+UniqueUnit assigning value 6 to square 0 4
+4
+Len1assigning value 4 to square 0 7
+
+Len1assigning value 4 to square 0 7
+
+Len1assigning value 4 to square 2 6
+The unit is :0
+The unit is :1
+The unit is :2
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00000000004013de in assign (puz=0x603010, row=117440512, col=0, val=54 '6') at sudoku.c:246
+246	  (*sq).vals[0]=val;
+Missing separate debuginfos, use: debuginfo-install glibc-2.12-1.149.el6_6.5.x86_64
+(gdb) bt
+#0  0x00000000004013de in assign (puz=0x603010, row=117440512, col=0, val=54 '6')
+    at sudoku.c:246
+#1  0x0000000000401892 in eliminate (puz=0x603010, row=2, col=6, val=52 '4') at sudoku.c:346
+#2  0x0000000000401409 in assign (puz=0x603010, row=2, col=6, val=52 '4') at sudoku.c:250
+#3  0x0000000000400b43 in create_puzzle (vals=0x7fffffffe500) at sudoku.c:91
+#4  0x00000000004008ec in solve (grid=0x7fffffffe500) at sudoku.c:49
+#5  0x0000000000401ad5 in main (argc=1, argv=0x7fffffffe6a8) at main.c:37
+(gdb) p col
+$1 = 0
+(gdb) frame 1
+#1  0x0000000000401892 in eliminate (puz=0x603010, row=2, col=6, val=52 '4') at sudoku.c:346
+346		  assign(puz, uni_row, uni_col, unittester[j]);
+(gdb) p unittester[j]
+$2 = 54 '6'
+(gdb) p j
+$3 = 5
+(gdb) p i
+$4 = 2
+(gdb) p (char)54
+$5 = 54 '6'
+(gdb) b Unique
+Breakpoint 1 at 0x4018f5: file sudoku.c, line 360.
+(gdb) run < p096_sudoku.txt
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+
+Starting program: /home/lee/classes/cs351/repos/mps/02/sudoku < p096_sudoku.txt
+warning: the debug information found in "/usr/lib/debug//lib64/ld-2.12.so.debug" does not match "/lib64/ld-linux-x86-64.so.2" (CRC mismatch).
+
+warning: the debug information found in "/usr/lib/debug/lib64/ld-2.12.so.debug" does not match "/lib64/ld-linux-x86-64.so.2" (CRC mismatch).
+
+warning: the debug information found in "/usr/lib/debug//lib64/libc-2.12.so.debug" does not match "/lib64/libc.so.6" (CRC mismatch).
+
+warning: the debug information found in "/usr/lib/debug/lib64/libc-2.12.so.debug" does not match "/lib64/libc.so.6" (CRC mismatch).
+
+Solving puzzle 1
+just assigned all the squares 9 possible digits
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+initiated the peers
+003020600900305001001806400008102900700000008006708200002609500800203009005010300
+326935The unit is :0
+
+Breakpoint 1, Unique (sq=0x6045f0, val=49 '1', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb) c
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=50 '2', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=51 '3', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=52 '4', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=53 '5', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=54 '6', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=55 '7', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=56 '8', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=57 '9', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+The unit is :1
+
+Breakpoint 1, Unique (sq=0x6045f0, val=49 '1', unit=1) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=50 '2', unit=1) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=51 '3', unit=1) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=52 '4', unit=1) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=53 '5', unit=1) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=54 '6', unit=1) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=55 '7', unit=1) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=56 '8', unit=1) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=57 '9', unit=1) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+The unit is :2
+
+Breakpoint 1, Unique (sq=0x6045f0, val=49 '1', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=50 '2', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=51 '3', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=52 '4', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=53 '5', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=54 '6', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=55 '7', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=56 '8', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=57 '9', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+The unit is :0
+
+Breakpoint 1, Unique (sq=0x6045f0, val=49 '1', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=50 '2', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=51 '3', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=52 '4', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=53 '5', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb)
+Continuing.
+
+Breakpoint 1, Unique (sq=0x6045f0, val=54 '6', unit=0) at sudoku.c:360
+360	  count=0;
+(gdb) c 100
+Will ignore next 99 crossings of breakpoint 1.	Continuing.
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+
+Breakpoint 1, Unique (sq=0x6045f0, val=55 '7', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb) c 1000
+Will ignore next 999 crossings of breakpoint 1.	 Continuing.
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+1The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+The unit is :0
+The unit is :1
+The unit is :2
+1The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 9 to square 2 1
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+
+Breakpoint 1, Unique (sq=0x604f50, val=56 '8', unit=2) at sudoku.c:360
+360	  count=0;
+(gdb) c 1000
+Will ignore next 999 crossings of breakpoint 1.	 Continuing.
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 0
+8The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 2 to square 0 5
+
+UniqueUnit assigning value 5 to square 0 4
+
+UniqueUnit assigning value 8 to square 0 4
+
+UniqueUnit assigning value 9 to square 0 3
+6The unit is :0
+The unit is :1
+The unit is :2
+
+UniqueUnit assigning value 3 to square 0 4
+
+UniqueUnit assigning value 6 to square 0 4
+4
+Len1assigning value 4 to square 0 7
+
+Len1assigning value 4 to square 0 7
+
+Len1assigning value 4 to square 2 6
+The unit is :0
+The unit is :1
+The unit is :2
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00000000004013de in assign (puz=0x603010, row=117440512, col=0, val=54 '6') at sudoku.c:246
+246	  (*sq).vals[0]=val;
+(gdb) help b
+Set breakpoint at specified line or function.
+break [LOCATION] [thread THREADNUM] [if CONDITION]
+LOCATION may be a line number, function name, or "*" and an address.
+If a line number is specified, break at start of code for that line.
+If a function is specified, break at start of code for that function.
+If an address is specified, break at that exact address.
+With no LOCATION, uses current execution address of the selected
+stack frame.  This is useful for breaking on return to a stack frame.
+
+THREADNUM is the number from "info threads".
+CONDITION is a boolean expression.
+
+Multiple breakpoints at one place are permitted, and useful if their
+conditions are different.
+
+Do "help breakpoints" for info on other commands dealing with breakpoints.
+(gdb) Kbt
+#0  0x00000000004013de in assign (puz=0x603010, row=117440512, col=0, val=54 '6')
+    at sudoku.c:246
+#1  0x0000000000401892 in eliminate (puz=0x603010, row=2, col=6, val=52 '4') at sudoku.c:346
+#2  0x0000000000401409 in assign (puz=0x603010, row=2, col=6, val=52 '4') at sudoku.c:250
+#3  0x0000000000400b43 in create_puzzle (vals=0x7fffffffe500) at sudoku.c:91
+#4  0x00000000004008ec in solve (grid=0x7fffffffe500) at sudoku.c:49
+#5  0x0000000000401ad5 in main (argc=1, argv=0x7fffffffe6a8) at main.c:37
+(gdb) p (col >K< 1)
+$6 = 1
+(gdb) p (col < 1P0)
+$7 = 0
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 3307] will be killed.
+
+Quit anyway? (y or n) y
