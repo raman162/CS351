@@ -239,7 +239,7 @@ static puzzle_t *search(puzzle_t *puz) {
 
 static puzzle_t *assign(puzzle_t *puz, int row, int col, char val) {
   square_t *sq = &((*puz).squares[row][col]);
-  printf ("assigning value %c to square %d %d \n", val, row, col);
+  //printf ("assigning value %c to square %d %d \n", val, row, col);
   //strcpy((*sq).vals,"");
   (*sq).vals[0]=val;
   (*sq).vals[1]='\0';
@@ -296,8 +296,9 @@ static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
         }
         memmove(target++,target,(len-loc_index));
         if ((*peer).row>8){
-          //  printf("memmove is screwing the row on square %d %d\n", (*peer).row, (*peer).col);
+          //printf("memmove is screwing the row on square %d %d\n", (*peer).row, (*peer).col);
         }
+        //  printf("removing %c from square %d %d \n", val, row, col);
         newlen=strlen((*peer).vals);
         if (newlen==0){
           return NULL;
@@ -329,7 +330,7 @@ static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
           uni_row=(*unique_sq).row;
           uni_col=(*unique_sq).col;
           assign(puz, uni_row, uni_col, unittester[j]);
-          printf("\nUniqueUnit assigning value %c to square %d %d\n", unittester[j]  , uni_row, uni_col);
+          //          printf("\nUniqueUnit assigning value %c to square %d %d\n", unittester[j]  , uni_row, uni_col);
       }
     }
     }
