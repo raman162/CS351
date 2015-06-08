@@ -72,29 +72,29 @@ static puzzle_t *create_puzzle(unsigned char vals[9][9]) {
       //printf("the row is:%d the col is:%d\n", (*sq).row, (*sq).col);
     }
   }
-  printf("just assigned all the squares 9 possible digits\n");
-  print_puzzle(pzl_ptr);
+  // printf("just assigned all the squares 9 possible digits\n");
+  // print_puzzle(pzl_ptr);
   for (i=0; i<NUM_ROWS; i++){
     for (j=0; j<NUM_COLS; j++){
       init_peers(pzl_ptr, i, j);
     }
   }
-  printf("initiated the peers\n");
-  printf("%s\n", vals);
+  //  printf("initiated the peers\n");
+  //  printf("%s\n", vals);
   for (i=0; i<NUM_ROWS; i++){
     for (j=0; j<NUM_COLS; j++){
       if (vals[i][j]!='0'&& vals[i][j] != '.'){
-        printf("%c", vals[i][j]);
+        //    printf("%c", vals[i][j]);
       }
       if(vals[i][j]!='0' &&  vals[i][j] !='.'){
         assign(pzl_ptr,i,j, vals[i][j]);//assigning of the values that were given
       }
     }
   }
-  printf("\n\nassigning given values\n");
-  print_puzzle(pzl_ptr);
-  printf("\n\n\n");
-  printf("create puzzle finished sucessfully!! :)\n");
+  // printf("\n\nassigning given values\n");
+  // print_puzzle(pzl_ptr);
+  // printf("\n\n\n");
+  //  printf("create puzzle finished sucessfully!! :)\n");
   return pzl_ptr;
 
 }
@@ -160,10 +160,8 @@ static int existInArr(square_t *sq_or, square_t *sq_add){
       // printf("%p is the address in peer, %p address of target\n", (*sq_or).peers[i], sq_add);
       return 1;
     }
-    else{
-      return 0;
-    }
   }
+  return 0;
 }
 
 static void free_puzzle(puzzle_t *puz) {
@@ -181,8 +179,8 @@ void print_puzzle(puzzle_t *p) {
   int i, j;
   for (i=0; i<NUM_ROWS; i++) {
     for (j=0; j<NUM_COLS; j++) {
-      printf(" %9s", p->squares[i][j].vals); // may be useful while debugging
-      //printf(" %2s", p->squares[i][j].vals);
+      // printf(" %9s", p->squares[i][j].vals); // may be useful while debugging
+      printf(" %2s", p->squares[i][j].vals);
     }
     printf("\n");
   }
@@ -196,13 +194,13 @@ static puzzle_t *search(puzzle_t *puz) {
   int j, k, sq_len, i, minlen, maxlen;
   puzzle_t *copy_puz, *check;
   square_t *sq;
-  printf("The search has started\n");
+  // printf("The search has started\n");
   if (puz==NULL){
-    printf("the solve failed\n");
+    // printf("the solve failed\n");
     return NULL;//Failed Earlier
   }
   maxlen = (MaxLenInPuz(puz));
-  printf("The max length is %d\n", maxlen);
+  // printf("The max length is %d\n", maxlen);
   if (maxlen==1){
     return puz;
   }
@@ -214,13 +212,13 @@ static puzzle_t *search(puzzle_t *puz) {
           sq_len = strlen((*sq).vals);
           //  printf("The length of square %d %d is %d\n", i, j, sq_len);
           if (sq_len==minlen){
-            printf("location of min square is: %d %d\n",i,j);
+            // printf("location of min square is: %d %d\n",i,j);
             for (k=0;k<sq_len;k++){
               copy_puz=copy_puzzle(puz);
-              printf("Copied Puzzle successfully in round %d\n", k);
-              printf("Assigning Value %c\n", (*sq).vals[k]);
+              //          printf("Copied Puzzle successfully in round %d\n", k);
+              // printf("Assigning Value %c\n", (*sq).vals[k]);
               check=assign(copy_puz, i, j, (*sq).vals[k]);
-              printf("Value of check %p\n", check);
+              // printf("Value of check %p\n", check);
               if (check == NULL){
                 free_puzzle(copy_puz);
               }
@@ -241,7 +239,6 @@ static puzzle_t *search(puzzle_t *puz) {
 
 static puzzle_t *assign(puzzle_t *puz, int row, int col, char val) {
   square_t *sq = &((*puz).squares[row][col]);
-  int i;
   printf ("assigning value %c to square %d %d \n", val, row, col);
   //strcpy((*sq).vals,"");
   (*sq).vals[0]=val;
@@ -294,11 +291,11 @@ static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
           }
         }
         if ((*peer).row > 8){
-          printf("this row was made bad before memmove\n");
+          // printf("this row was made bad before memmove\n");
         }
         memmove(target++,target,(len-loc_index));
         if ((*peer).row>8){
-          printf("memmove is screwing the row on square %d %d\n", (*peer).row, (*peer).col);
+          //  printf("memmove is screwing the row on square %d %d\n", (*peer).row, (*peer).col);
         }
         newlen=strlen((*peer).vals);
         if (newlen==0){
