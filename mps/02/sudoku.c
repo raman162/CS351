@@ -198,6 +198,7 @@ static puzzle_t *search(puzzle_t *puz) {
   square_t *sq;
   printf("The search has started\n");
   if (puz==NULL){
+    printf("the solve failed\n");
     return NULL;//Failed Earlier
   }
   maxlen = (MaxLenInPuz(puz));
@@ -211,7 +212,7 @@ static puzzle_t *search(puzzle_t *puz) {
         for (j=0;j<NUM_COLS;j++){
           sq=&((*puz).squares[i][j]);
           sq_len = strlen((*sq).vals);
-          printf("The length of square %d %d is %d\nThe minlength is %d\n", i, j, sq_len,minlen);
+          //  printf("The length of square %d %d is %d\n", i, j, sq_len);
           if (sq_len==minlen){
             printf("location of min square is: %d %d\n",i,j);
             for (k=0;k<sq_len;k++){
@@ -246,6 +247,7 @@ static puzzle_t *assign(puzzle_t *puz, int row, int col, char val) {
   (*sq).vals[0]=val;
   (*sq).vals[1]='\0';
   // printf("%s\n", (*sq).vals);
+  
  
    eliminate(puz, row, col, val);
 
@@ -274,11 +276,12 @@ static int MaxLenInPuz(puzzle_t *puz){
 }
 
 static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
-  int i,j, len, newlen, uni_row, uni_col, loc_index;
-  square_t *peer, *sq, *unique_sq;
+  int i,j, len, newlen, uni_row, uni_col, loc_index, sqsa_counter;
+  square_t *peer, *sq, *unique_sq, *sqs_to_assign[20];
   char *target;
   char unittester[10];
   strcpy(unittester,DIGITS);
+  sqsa_counter=0;
   for (i=0;i<20;i++){
     peer = ((*puz).squares[row][col]).peers[i];
     len=strlen((*peer).vals);
@@ -302,12 +305,18 @@ static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
           return NULL;
         }
         else if (newlen==1){
-          assign(puz,(*peer).row ,(*peer).col,(*peer).vals[0]);
-          printf("\nassigning value %c to square %d %d\n", (*peer).vals[0], (*peer).row, (*peer).col);
+          sqs_to_assign[sqsa_counter]=peer;
+          sqsa_counter++;
+          
+          //   printf("\nassigning value %c to square %d %d\n", (*peer).vals[0], (*peer).row, (*peer).col);
         }
     
       }
     }
+  }
+  for (i=0;i<sqsa_counter;i++){
+    sq=sqs_to_assign[i];
+    assign(puz,(*sq).row ,(*sq).col,(*sq).vals[0]);
   }
   //printf("\n\nDoes here even get passed?\n");
   sq=&(*puz).squares[row][col];
@@ -318,11 +327,11 @@ static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
       // printf("The value we are testing for %c\n", unittester[j]);
       //printf("The Unique value is: %p\n", unique_sq);
         if (unique_sq != NULL){
-          printf("This square is unique: %p\n", unique_sq);
+          //printf("This square is unique: %p\n", unique_sq);
           uni_row=(*unique_sq).row;
           uni_col=(*unique_sq).col;
           assign(puz, uni_row, uni_col, unittester[j]);
-          printf("\nUniqueUnit assigning value %c to square %d %d\n", unittester[j]  , uni_row, uni_col);
+          //printf("\nUniqueUnit assigning value %c to square %d %d\n", unittester[j]  , uni_row, uni_col);
       }
     }
   }
