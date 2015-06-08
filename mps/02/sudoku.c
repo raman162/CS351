@@ -279,6 +279,7 @@ static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
   char unittester[10];
   strcpy(unittester,DIGITS);
   sqsa_counter=0;
+  //elminating all the values from the peers
   for (i=0;i<20;i++){
     peer = ((*puz).squares[row][col]).peers[i];
     len=strlen((*peer).vals);
@@ -300,7 +301,7 @@ static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
         newlen=strlen((*peer).vals);
         if (newlen==0){
           return NULL;
-        }
+        }//checking to see if squares are left with final values
         else if (newlen==1){
           sqs_to_assign[sqsa_counter]=peer;
           sqsa_counter++;
@@ -313,7 +314,7 @@ static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
   }
   for (i=0;i<sqsa_counter;i++){
     sq=sqs_to_assign[i];
-    assign(puz,(*sq).row ,(*sq).col,(*sq).vals[0]);
+    eliminate(puz,(*sq).row ,(*sq).col,(*sq).vals[0]);
   }
   //printf("\n\nDoes here even get passed?\n");
   sq=&(*puz).squares[row][col];
@@ -328,10 +329,10 @@ static puzzle_t *eliminate(puzzle_t *puz, int row, int col, char val) {
           uni_row=(*unique_sq).row;
           uni_col=(*unique_sq).col;
           assign(puz, uni_row, uni_col, unittester[j]);
-          //printf("\nUniqueUnit assigning value %c to square %d %d\n", unittester[j]  , uni_row, uni_col);
+          printf("\nUniqueUnit assigning value %c to square %d %d\n", unittester[j]  , uni_row, uni_col);
       }
     }
-  }
+    }
 
   return puz;
 }
