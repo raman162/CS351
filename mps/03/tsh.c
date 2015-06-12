@@ -91,6 +91,7 @@ int main(int argc, char **argv)
   char c;
   char cmdline[MAXLINE];
   int emit_prompt = 1; /* emit prompt (default) */
+  char quit[MAXLINE];
 
   /* Redirect stderr to stdout (so that driver will get all output
    * on the pipe connected to stdout) */
@@ -139,6 +140,10 @@ int main(int argc, char **argv)
     if (feof(stdin)) { /* End of file (ctrl-d) */
       fflush(stdout);
       exit(0);
+    }
+    strcpy(quit, "quit");
+    if (strcmp(quit,cmdline) ==0){
+      exit(0);//quits program if quit is entered 
     }
 
     /* Evaluate the command line */
