@@ -177,11 +177,24 @@ void eval(char *cmdline)
   for (i=0; argv[i] != NULL; i++) {
     printf("argv[%d]=%s%s", i, argv[i], (argv[i+1]==NULL)?"\n":", ");
   }
-  if (strcmp(argv[i],"quit")==0){
-    exit(0);
-  }
+  if (builtin_cmd(&argv[i]) == 0){
+    return;
+  }else{
+    int pid;
+    if((pid=fork())==0){
+      if(execvp(argv[0], argv)< 0){
+        printf("Command not found\n");
+        exit(0);
+      }
+      addjob(jobs,pid,FG,cmdline);
+      if (!bg){
+        waitfg(pid);
+      }
+  }    
   return;
+  }
 }
+
 
 /* 
  * parseline - Parse the command line and build the argv array.
@@ -239,14 +252,25 @@ int parseline(const char *cmdline, char **argv)
   }
   return bg;
 }
-
 /* 
  * builtin_cmd - If the user has typed a built-in command then execute
  *    it immediately.  
  */
 int builtin_cmd(char **argv) 
 {
-  return 0;     /* not a builtin command */
+  
+  if (strcmp((*argv),"quit")==0){
+    exit(0);
+  }
+  if (strcmp((*argv),"fg")==0 || strcmp(*argv,"bg")==0){
+    do_bgfg(argv);
+    return 0;
+  }
+  if (strcmp((*argv),"jobs") ==0){
+    listjobs(jobs);
+    return 0;
+  }
+ return 1;     /* not a builtin command */
 }
 
 /* 
@@ -254,6 +278,7 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
+  
   return;
 }
 
@@ -262,6 +287,12 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
+  pid_t w;
+  int stat;
+  w = waitpid(pid, &stat, WUNTRACED);
+  if (WIFEXITED(stat))
+    printf("Process %d exited with status %d\n", w, WEXITSTATUS(stat));
+ 
   return;
 }
 
