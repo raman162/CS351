@@ -47,6 +47,7 @@ struct job_t {              /* The job struct */
   char cmdline[MAXLINE];  /* command line */
 };
 struct job_t jobs[MAXJOBS]; /* The job list */
+pid_t fg;
 /* End global variables */
 
 
@@ -91,7 +92,7 @@ int main(int argc, char **argv)
   char c;
   char cmdline[MAXLINE];
   int emit_prompt = 1; /* emit prompt (default) */
- 
+  
 
   /* Redirect stderr to stdout (so that driver will get all output
    * on the pipe connected to stdout) */
@@ -167,16 +168,16 @@ void eval(char *cmdline)
 {
   /* the following code demonstrates how to use parseline --- you'll 
    * want to replace most of it (at least the print statements). */
-  int i, bg;
+  int i, bg, job_loc;
   char *argv[MAXARGS];
  
 
   bg = parseline(cmdline, argv);
   if (bg) {
-    printf("background job requested\n");
+    // printf("background job requested\n");
   }
   for (i=0; argv[i] != NULL; i++) {
-    printf("argv[%d]=%s%s", i, argv[i], (argv[i+1]==NULL)?"\n":", ");
+    // printf("argv[%d]=%s%s", i, argv[i], (argv[i+1]==NULL)?"\n":", ");
   }
   
   if (builtin_cmd(&argv[0]) == 0){
@@ -184,24 +185,30 @@ void eval(char *cmdline)
   }else{
     int pid;
     if((pid=fork())==0){
+     
       if(execvp(argv[0], argv)< 0){
+        setpgid(0, 0);
         printf("Command not found\n");
+        deletejob(jobs, pid);
         exit(0);
       }
-      addjob(jobs,pid,FG,cmdline);
+      
+      
      
     }
+    
     if (!bg){
-      waitfg(pid);
+      job_loc=addjob(jobs,pid,FG,cmdline);
+      fg=pid;
+      waitfg(fg);
     }
     else{
-      printf("[1] (%d) %s\n", pid, cmdline);
+      job_loc=addjob(jobs,pid,BG,cmdline);
+      printf("[%d] (%d) %s\n",job_loc,  pid, cmdline);
     }
   return;
   }
 }
-
-
 /* 
  * parseline - Parse the command line and build the argv array.
  * 
@@ -272,7 +279,8 @@ int builtin_cmd(char **argv)
     do_bgfg(argv);
     return 0;
   }
-  if (strcmp((*argv),"jobs") ==0){
+  if (strcmp((*argv),"jobs") == 0){
+    //printf("Do we ever get here?\n");
     listjobs(jobs);
     return 0;
   }
@@ -293,13 +301,8 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
-  pid_t w;
-  int stat;
-  w = waitpid(pid, &stat, WUNTRACED);
-  if (WIFEXITED(stat))
-    printf("Process %d exited with status %d\n", w, WEXITSTATUS(stat));
- 
-  return;
+  while (fg != -1)
+    sleep(1);
 }
 
 /*****************
@@ -315,6 +318,13 @@ void waitfg(pid_t pid)
  */
 void sigchld_handler(int sig) 
 {
+  pid_t pid;
+  while((pid = waitpid (-1, NULL, WNOHANG)) > 0){
+    // printf("Handler reaped child %d\n", (int)pid);
+    deletejob(jobs, pid);
+    if (pid == fg)
+      fg= -1;
+  }  
   return;
 }
 
@@ -325,6 +335,11 @@ void sigchld_handler(int sig)
  */
 void sigint_handler(int sig) 
 {
+  
+  fg=fgpid(jobs);
+  kill(fg,SIGINT);
+  //printf("kill function sends %d\n", stat);
+  printf("Job [%d] (%d) terminated by signal %d\n",pid2jid(fg), fg, sig);
   return;
 }
 
@@ -376,8 +391,9 @@ int maxjid(struct job_t *jobs)
 /* addjob - Add a job to the job list */
 int addjob(struct job_t *jobs, pid_t pid, int state, char *cmdline) 
 {
+
   int i;
-    
+  //printf("Going to try and add a job :)\n");  
   if (pid < 1)
     return 0;
 
@@ -392,7 +408,8 @@ int addjob(struct job_t *jobs, pid_t pid, int state, char *cmdline)
       if(verbose){
         printf("Added job [%d] %d %s\n", jobs[i].jid, jobs[i].pid, jobs[i].cmdline);
       }
-      return 1;
+      
+      return (i+1);
     }
   }
   printf("Tried to create too many jobs\n");
