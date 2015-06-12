@@ -91,7 +91,7 @@ int main(int argc, char **argv)
   char c;
   char cmdline[MAXLINE];
   int emit_prompt = 1; /* emit prompt (default) */
-  char quit[MAXLINE];
+ 
 
   /* Redirect stderr to stdout (so that driver will get all output
    * on the pipe connected to stdout) */
@@ -141,11 +141,7 @@ int main(int argc, char **argv)
       fflush(stdout);
       exit(0);
     }
-    strcpy(quit, "quit");
-    if (strcmp(quit,cmdline) ==0){
-      exit(0);//quits program if quit is entered 
-    }
-
+   
     /* Evaluate the command line */
     eval(cmdline);
     fflush(stdout);
@@ -172,6 +168,7 @@ void eval(char *cmdline)
    * want to replace most of it (at least the print statements). */
   int i, bg;
   char *argv[MAXARGS];
+ 
 
   bg = parseline(cmdline, argv);
   if (bg) {
@@ -179,6 +176,9 @@ void eval(char *cmdline)
   }
   for (i=0; argv[i] != NULL; i++) {
     printf("argv[%d]=%s%s", i, argv[i], (argv[i+1]==NULL)?"\n":", ");
+  }
+  if (strcmp(argv[i],"quit")==0){
+    exit(0);
   }
   return;
 }
