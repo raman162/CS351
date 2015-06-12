@@ -141,6 +141,7 @@ int main(int argc, char **argv)
       fflush(stdout);
       exit(0);
     }
+    
    
     /* Evaluate the command line */
     eval(cmdline);
@@ -177,7 +178,8 @@ void eval(char *cmdline)
   for (i=0; argv[i] != NULL; i++) {
     printf("argv[%d]=%s%s", i, argv[i], (argv[i+1]==NULL)?"\n":", ");
   }
-  if (builtin_cmd(&argv[i]) == 0){
+  
+  if (builtin_cmd(&argv[0]) == 0){
     return;
   }else{
     int pid;
@@ -187,10 +189,14 @@ void eval(char *cmdline)
         exit(0);
       }
       addjob(jobs,pid,FG,cmdline);
-      if (!bg){
-        waitfg(pid);
-      }
-  }    
+     
+    }
+    if (!bg){
+      waitfg(pid);
+    }
+    else{
+      printf("[1] (%d) %s\n", pid, cmdline);
+    }
   return;
   }
 }
