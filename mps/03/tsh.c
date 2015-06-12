@@ -303,6 +303,7 @@ void waitfg(pid_t pid)
 {
   while (fg != -1)
     sleep(1);
+  return;
 }
 
 /*****************
@@ -350,6 +351,13 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
+  struct job_t *sjob;
+  fg=fgpid(jobs);
+  kill(fg,SIGTSTP);
+  printf("[%d] (%d) stopped by signal %d\n", pid2jid(fg), fg, sig);
+  sjob=getjobpid(jobs, fg);
+  sjob->state=ST;
+  fg=-1;
   return;
 }
 
