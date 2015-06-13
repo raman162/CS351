@@ -207,7 +207,7 @@ void eval(char *cmdline)
     }
     else{
       job_loc=addjob(jobs,pid,BG,cmdline);
-      printf("[%d] (%d) %s\n",job_loc,  pid, cmdline);
+      printf("[%d] (%d) %s",job_loc,  pid, cmdline);
       sigprocmask(SIG_UNBLOCK, &mask, NULL);
     }
   return;
@@ -301,7 +301,7 @@ void do_bgfg(char **argv)
   //Whether it is background or foreground, the process needs to run
   //Check to see if there is an arguement
   if (argv[1] == NULL){
-    printf("%s command requires PID or JobID\n", argv[0]);
+    printf("%s command requires PID or %%jobid argument\n", argv[0]);
     return;
   }
   //change the string into a PID if digit
@@ -320,13 +320,16 @@ void do_bgfg(char **argv)
       printf("%s: No such job\n", argv[1]);
       return;
     }
+  } else {
+    printf("%s: argument must be a PID or %%jobid argument\n", argv[0]);
+    return;
   }
   //Continuing stopped process
   kill(-(bfjob->pid), SIGCONT);
   pid = bfjob->pid;
   //changing the state of the job to either fg or bg
   if (strcmp(argv[0], "bg") == 0){
-    printf("[%d] (%d) %s\n", pid2jid(pid), pid, bfjob->cmdline);
+    printf("[%d] (%d) %s", pid2jid(pid), pid, bfjob->cmdline);
     bfjob->state=BG;
   }else{
     bfjob->state=FG;
@@ -371,13 +374,11 @@ void sigchld_handler(int sig)
       return;
     }
     deletejob(jobs, pid);
-
   }
     if (errno == 0)
       return;
     //if (errno != ECHILD)
     //unix_error("waitpid error");
-    
   return;
 }
 
@@ -391,7 +392,7 @@ void sigint_handler(int sig)
   pid_t  pid;
   pid=fgpid(jobs);
   if (pid!=0){
-    kill(pid,SIGINT);
+    kill(-pid,SIGINT);
     printf("Job [%d] (%d) terminated by signal %d\n", pid2jid(pid), pid, sig);
   }
   return;
@@ -407,7 +408,7 @@ void sigtstp_handler(int sig)
   pid_t pid;
   pid=fgpid(jobs);
   if (pid!=0){
-    kill(pid,SIGTSTP);
+    kill(-pid,SIGTSTP);
   }
   return;
 }
