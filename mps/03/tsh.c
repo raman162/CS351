@@ -47,7 +47,6 @@ struct job_t {              /* The job struct */
   char cmdline[MAXLINE];  /* command line */
 };
 struct job_t jobs[MAXJOBS]; /* The job list */
-pid_t fg;
 /* End global variables */
 
 
@@ -184,10 +183,14 @@ void eval(char *cmdline)
     return;
   }else{
     int pid;
+    sigset_t mask;
+    sigemptyset(&mask);
+    sigaddset(&mask, SIGCHLD);
+    sigprocmask(SIG_BLOCK, &mask, NULL);
     if((pid=fork())==0){
-     
+      setpgid(0, 0);
       if(execvp(argv[0], argv)< 0){
-        setpgid(0, 0);
+       
         printf("Command not found\n");
         deletejob(jobs, pid);
         exit(0);
@@ -199,12 +202,13 @@ void eval(char *cmdline)
     
     if (!bg){
       job_loc=addjob(jobs,pid,FG,cmdline);
-      fg=pid;
-      waitfg(fg);
+      sigprocmask(SIG_UNBLOCK, &mask, NULL);
+      waitfg(pid);
     }
     else{
       job_loc=addjob(jobs,pid,BG,cmdline);
       printf("[%d] (%d) %s\n",job_loc,  pid, cmdline);
+      sigprocmask(SIG_UNBLOCK, &mask, NULL);
     }
   return;
   }
@@ -292,7 +296,42 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
-  
+  struct job_t *bfjob;
+  pid_t pid;
+  //Whether it is background or foreground, the process needs to run
+  //Check to see if there is an arguement
+  if (argv[1] == NULL){
+    printf("%s command requires PID or JobID\n", argv[0]);
+    return;
+  }
+  //change the string into a PID if digit
+  if (isdigit(argv[1][0])){
+    pid_t pid = atoi(argv[1]);
+    bfjob=getjobpid(jobs,pid);
+    if(!bfjob){
+      printf("(%d): No such process\n", pid);
+        return;
+    }
+    //change the string into a jid if there is a "%" sign infront
+  }else if(argv[1][0] == '%' ){
+    int jobid=atoi(&argv[1][1]);
+    bfjob=getjobjid(jobs, jobid);
+    if(!bfjob){
+      printf("%s: No such job\n", argv[1]);
+      return;
+    }
+  }
+  //Continuing stopped process
+  kill(-(bfjob->pid), SIGCONT);
+  pid = bfjob->pid;
+  //changing the state of the job to either fg or bg
+  if (strcmp(argv[0], "bg") == 0){
+    printf("[%d] (%d) %s\n", pid2jid(pid), pid, bfjob->cmdline);
+    bfjob->state=BG;
+  }else{
+    bfjob->state=FG;
+    waitfg(pid); 
+  }
   return;
 }
 
@@ -301,8 +340,8 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
-  while (fg != -1)
-    sleep(1);
+  while (pid==fgpid(jobs))
+    {}
   return;
 }
 
@@ -319,28 +358,42 @@ void waitfg(pid_t pid)
  */
 void sigchld_handler(int sig) 
 {
+  int status;
   pid_t pid;
-  while((pid = waitpid (-1, NULL, WNOHANG)) > 0){
-    // printf("Handler reaped child %d\n", (int)pid);
+  while((pid = waitpid (-1, &status, WNOHANG | WUNTRACED)) > 0){
+    //printf("Handler reaped child %d\n", (int)pid);
+    /*if (WIFSIGNALED(status))
+        printf("Job [%d] (%d) terminated by signal %d\n", pid2jid(pid), pid, WTERMSIG(status));
+     else */
+       if(WIFSTOPPED(status)){
+      printf("Job [%d] (%d) stopped by signal %d\n", pid2jid(pid), pid, WSTOPSIG(status));
+      getjobpid(jobs, pid)->state=ST;
+      return;
+    }
     deletejob(jobs, pid);
-    if (pid == fg)
-      fg= -1;
-  }  
+
+  }
+    if (errno == 0)
+      return;
+    //if (errno != ECHILD)
+    //unix_error("waitpid error");
+    
   return;
 }
 
-/* 
+/*
  * sigint_handler - The kernel sends a SIGINT to the shell whenver the
  *    user types ctrl-c at the keyboard.  Catch it and send it along
  *    to the foreground job.  
  */
 void sigint_handler(int sig) 
 {
-  
-  fg=fgpid(jobs);
-  kill(fg,SIGINT);
-  //printf("kill function sends %d\n", stat);
-  printf("Job [%d] (%d) terminated by signal %d\n",pid2jid(fg), fg, sig);
+  pid_t  pid;
+  pid=fgpid(jobs);
+  if (pid!=0){
+    kill(pid,SIGINT);
+    printf("Job [%d] (%d) terminated by signal %d\n", pid2jid(pid), pid, sig);
+  }
   return;
 }
 
@@ -351,13 +404,11 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
-  struct job_t *sjob;
-  fg=fgpid(jobs);
-  kill(fg,SIGTSTP);
-  printf("[%d] (%d) stopped by signal %d\n", pid2jid(fg), fg, sig);
-  sjob=getjobpid(jobs, fg);
-  sjob->state=ST;
-  fg=-1;
+  pid_t pid;
+  pid=fgpid(jobs);
+  if (pid!=0){
+    kill(pid,SIGTSTP);
+  }
   return;
 }
 
