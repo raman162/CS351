@@ -365,9 +365,9 @@ void sigchld_handler(int sig)
   pid_t pid;
   while((pid = waitpid (-1, &status, WNOHANG | WUNTRACED)) > 0){
     //printf("Handler reaped child %d\n", (int)pid);
-    /*if (WIFSIGNALED(status))
+    if (WIFSIGNALED(status))
         printf("Job [%d] (%d) terminated by signal %d\n", pid2jid(pid), pid, WTERMSIG(status));
-     else */
+     else 
        if(WIFSTOPPED(status)){
       printf("Job [%d] (%d) stopped by signal %d\n", pid2jid(pid), pid, WSTOPSIG(status));
       getjobpid(jobs, pid)->state=ST;
@@ -393,7 +393,7 @@ void sigint_handler(int sig)
   pid=fgpid(jobs);
   if (pid!=0){
     kill(-pid,SIGINT);
-    printf("Job [%d] (%d) terminated by signal %d\n", pid2jid(pid), pid, sig);
+    //printf("Job [%d] (%d) terminated by signal %d\n", pid2jid(pid), pid, sig);
   }
   return;
 }
