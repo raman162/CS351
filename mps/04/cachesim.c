@@ -94,7 +94,7 @@ int main (int argc, char *argv[]) {
         /* simulate cache fetch with address `addr_req` */
       //        printf("Processing request: 0x%lX\n", addr_req);
     }
-    printf("The hit rate is: %f | Miss rate is %f\n", (double)hits/n, (double)(n-hits)/n);
+    printf("The hit rate is: %.2f%% | Miss rate is %.2f%%\n\n", ((double)hits/n)*100, ((double)(n-hits)/n)*100);
     return 0;
 }
 
